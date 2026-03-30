@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Events Dashboard</title>
+    <link href="https://cdn.npm-cdn.com/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; }
+        .container { margin-top: 60px; }
+        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .btn-add { background-color: #06b6d4; border: none; color: white; font-weight: bold; padding: 12px 25px; border-radius: 10px; transition: 0.3s; }
+        .btn-add:hover { background-color: #0891b2; transform: translateY(-2px); }
+        .table-card { background-color: #1e293b; border-radius: 15px; padding: 25px; border: 1px solid #334155; }
+        .table { color: white; border-collapse: separate; border-spacing: 0 10px; }
+        .table thead th { border: none; color: #06b6d4; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; }
+        
+        /* Title Styling Fix */
+        .event-title { 
+            color: #ffffff !important; 
+            font-weight: 800 !important; 
+            font-size: 1.1rem; 
+        }
+        
+        .table td { border-bottom: 1px solid #334155; padding: 20px 15px; vertical-align: middle; color: #cbd5e1; }
+        .btn-edit { color: #06b6d4; border: 1px solid #06b6d4; font-size: 0.8rem; font-weight: bold; padding: 6px 15px; border-radius: 6px; text-decoration: none; }
+        .btn-edit:hover { background-color: #06b6d4; color: white; }
+        .btn-delete { color: #ef4444; border: 1px solid #ef4444; font-size: 0.8rem; font-weight: bold; padding: 6px 15px; border-radius: 6px; text-decoration: none; }
+        .btn-delete:hover { background-color: #ef4444; color: white; }
+        .logout-link { color: #f87171; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1 class="fw-bold">University Events Dashboard</h1>
+            <a href="/logout" class="logout-link">Sign Out / Logout</a>
+        </div>
+
+        <div class="mb-4">
+            <a href="/add" class="btn btn-add">+ Add New Event</a>
+        </div>
+
+        <div class="table-card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Event Title</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (events && events.length > 0) { %>
+                        <% events.forEach(event => { %>
+                        <tr>
+                            <td class="event-title"><%= event.title %></td>
+                            <td><%= event.date %></td>
+                            <td><%= event.location %></td>
+                            <td style="font-size: 0.9rem; opacity: 0.8;"><%= event.description %></td>
+                            <td>
+                                <a href="/edit/<%= event._id %>" class="btn-edit me-2">Edit</a>
+                                <a href="/delete/<%= event._id %>" class="btn-delete" onclick="return confirm('Delete karein?')">Delete</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="5" class="text-center py-5">No events found.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
